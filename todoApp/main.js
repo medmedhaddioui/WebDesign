@@ -30,7 +30,7 @@ function onSubmit (e) {
                 isCompleted : false
         }
         allTodos.push(objTodos);
-        updateTodoList();
+        updateTodoList();0
         saveTodos();
         newTodo.value = "";
     }

@@ -1,7 +1,7 @@
 import fastifyStatic from '@fastify/static'
 import { join } from 'path'
 
- async function routes (fastify, options)
+async function routes (fastify)
 {
     fastify.get('/', async (request, reply) => {
         return {hello: 'world'}

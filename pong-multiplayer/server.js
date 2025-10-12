@@ -1,14 +1,13 @@
 import Fastify from 'fastify'
-// import Database from 'better-sqlite3'
-// const Database = require('better-sqlite3');
 import routes from './routes.js'
+import sqliteDB from './sqlite.js'
 
 const PORT = 8000
 const fastify = Fastify({
     logger: true
 })
-// const db = new Database('db');
 
+await fastify.register(sqliteDB)// read
 await fastify.register(routes)
 
 const start = async () => {

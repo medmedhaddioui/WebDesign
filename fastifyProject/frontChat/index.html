@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Chat</title>
+  <style>
+    body {
+        font-family: Arial;
+        padding: 20px;
+    }
+  
+  #chat {
+    border: 1px solid black;
+    height: 300px;
+    padding: 10px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    width: 70%;
+    padding: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+  }
+  </style>
+</head>
+<body>
+    <h1>Welcome to chatApp</h1>
+    <div id="chat"> </div>
+    <input id="msgArea" type="text" autocomplete="off">
+    <button onclick="sendMessage()">Send</button>
+</body>
+<script>
+
+    const ws = new WebSocket('ws://localhost:3000/chat');
+    ws.onopen = (event) => {
+      console.log('Hello connections established');
+      showMessage('System: Connected to chat!');
+    }
+    ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        showMessage(data.username + ': ' + data.text);
+    }
+    ws.onclose =  (event) => {
+      console.log('Closed connection')
+      showMessage('System: Disconnected from chat');
+    }
+    ws.enerror =  (error) => {
+      console.log('Error: ', error);
+      showMessage('System: Connection error');
+    }
+    function sendMessage()
+    {
+        const msg = document.getElementById('msgArea');
+        const text = msg.value;
+        if (text && ws.readyState === WebSocket.OPEN)
+        {
+          const message = {
+            username: 'User',
+            text: text
+          };
+
+          ws.send(JSON.stringify(message));
+          msg.value = '';
+        }
+    }
+    function showMessage(msg) {
+      const chatSide = document.getElementById('chat');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+      messageDiv.textContent = msg;
+      chatSide.appendChild(messageDiv);
+      messageDiv.scrollTop = messageDiv.scrollHeight;
+    }
+</script>
+</html>

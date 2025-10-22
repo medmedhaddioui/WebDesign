@@ -1,24 +1,6 @@
 
-    // class Player {
-    //     constructor (x, y, width, height) {
-    //         this.x = x;
-    //         this.y = y;
-    //         this.width = width;
-    //         this.height = height;
-    //         this.score = 0;
-    //     }
-    // }
-    // const PADDLE_SPEED = 5;
-    // const player1 = new Player(10, (canvas.height / 2) - 50, 15, 100);
-    // const player2 = new Player(canvas.width - 25, (canvas.height / 2) - 50, 15, 100);
+// const player2 = new Player(canvas.width - 25, (canvas.height / 2) - 50, 15, 100);
     // const keys = {};
-
-    // document.addEventListener('keydown', (event) => {
-    //     keys[event.key] = true;
-    // });
-    // document.addEventListener('keyup', (event) => {
-    //     keys[event.key] = false;
-    // });
 
     // function updatePaddles() {
     //     if (keys.w) player1.y -= PADDLE_SPEED;
@@ -125,15 +107,11 @@
 
 
 
-
-
-
-
     
 
 import Fastify from 'fastify';
 import routes from './routes.js';
-// import WebSocket from '@fastify/websocket';
+import WebSocket from '@fastify/websocket';
 import cors from "@fastify/cors";
 
 const PORT = 8000;
@@ -143,7 +121,7 @@ const fastify = Fastify({
 await fastify.register(cors, {
   origin: true, 
 });
-
+await fastify.register(WebSocket);
 await fastify.register(routes);
 
 const start = async () => {

@@ -1,5 +1,4 @@
-
-  // function DrawScore() {
+// function DrawScore() {
   //         ctx.fillStyle = '#ece8e1';
   //         ctx.font = '32px Arial';
   //         ctx.fillText(player1.score, canvas.width / 4, 50);
@@ -77,44 +76,55 @@ getUsers.addEventListener('click', async (e) => {
 })
 
 
-function gameRendring(message) {
+// function gameRendring(message) {
+//   const canvas = document.getElementById('canvas');
+//   const ctx = canvas.getContext('2d');
+//   canvas.style.background = '#0f1923';
+//   canvas.height = 400;
+//   canvas.width = 800;
+//   function DrawPaddle(player1) {
+//       ctx.beginPath();
+//       ctx.fillStyle = 'red';
+//       ctx.rect(player1.x, player1.y, player1.width , player1.height);
+//       // ctx.rect(player2.x, player2.y, player2.width , player2.height);
+//       ctx.fill();
+//   }
+//   function gameLoop() {
+//   ctx.clearRect(0, 0,canvas.width, canvas.height);
+//       // if (gameover)
+//       // {
+//       //     isWinner();
+//       //     return;
+//       // }
+//       DrawPaddle(message.playerStats);
+//       // UpdateBall();
+//       // DrawScore();
+//       window.requestAnimationFrame(gameLoop);
+//   }
+//   gameLoop();
+// }
 
-
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.style.background = '#0f1923';
-  canvas.height = 400;
-  canvas.width = 800;
-  function DrawPaddle(player1) {
-      ctx.beginPath();
-      ctx.fillStyle = 'red';
-      ctx.rect(player1.x, player1.y, player1.width , player1.height);
-      // ctx.rect(player2.x, player2.y, player2.width , player2.height);
-      ctx.fill();
-  }
-  function gameLoop() {
-  ctx.clearRect(0, 0,canvas.width, canvas.height);
-      // if (gameover)
-      // {
-      //     isWinner();
-      //     return;
-      // }
-      DrawPaddle(message.playerStats);
-      // UpdateBall();
-      // DrawScore();
-      console.log('here');
-      window.requestAnimationFrame(gameLoop);
-  }
-  gameLoop();
+function showWaitingMessage() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#ece8e1';
+    ctx.font = '28px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Waiting for opponent...', canvas.width / 2, canvas.height / 2 - 20);
+    ctx.font = '18px Arial';
+    ctx.fillText(`You are Player ${myPlayerNumber}`, canvas.width / 2, canvas.height / 2 + 20);
+    ctx.textAlign = 'left';
 }
 
 function handleServerMessage (message, ws) {
     if (message.type === 'PLAYER_JOINED') {
-        console.log('here');
+        console.log('first player is joined!!');
+        showWaitingMessage();
     }
-        // gameRendring(message);
-    else (message.type === 'GAME_STARTED')
-        return ;
+    else if (message.type === 'GAME_STARTED') 
+    {
+      // on this case the player 
+      //is second player is joined and game should started 
+    }
 }
 
 function connectToGameServer() {
@@ -135,6 +145,7 @@ function connectToGameServer() {
       console.log('Closed connection')
     }
 }
+
 playButton.addEventListener('click', async (e) => {
     e.preventDefault();
     if (!currentPlayer)
